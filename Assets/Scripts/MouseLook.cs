@@ -23,36 +23,58 @@ public class MouseLook : MonoBehaviour
     public float sensitivityVert = 9.0f;
     public float minVert = -45.0f;
     public float maxVert = 45.0f;
+    private bool isActive = true;
 
     private float rotationX = 0.0f;
     void Update()
     {
-        
-        
 
-        if (axes == RotationAxes.MouseX)
+        if (isActive)
         {
-            transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * sensitivityHoriz);
 
-        }
-        else if (axes == RotationAxes.MouseY)
-        {
-            rotationX -= Input.GetAxis("Mouse Y") * sensitivityVert;
-            rotationX = Mathf.Clamp(rotationX, minVert, maxVert);
-            transform.localEulerAngles = new Vector3(rotationX, 0, 0);
+            if (axes == RotationAxes.MouseX)
+            {
+                transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * sensitivityHoriz);
 
-        }
-        else
-        {
-            rotationX -= Input.GetAxis("Mouse Y") * sensitivityVert;
-            rotationX = Mathf.Clamp(rotationX, minVert, maxVert);
-            float deltaHoriz = Input.GetAxis("Mouse X") * sensitivityHoriz;
-            float rotationY = transform.localEulerAngles.y + deltaHoriz;
+            }
+            else if (axes == RotationAxes.MouseY)
+            {
+                rotationX -= Input.GetAxis("Mouse Y") * sensitivityVert;
+                rotationX = Mathf.Clamp(rotationX, minVert, maxVert);
+                transform.localEulerAngles = new Vector3(rotationX, 0, 0);
+
+            }
+            else
+            {
+                rotationX -= Input.GetAxis("Mouse Y") * sensitivityVert;
+                rotationX = Mathf.Clamp(rotationX, minVert, maxVert);
+                float deltaHoriz = Input.GetAxis("Mouse X") * sensitivityHoriz;
+                float rotationY = transform.localEulerAngles.y + deltaHoriz;
 
 
 
-            transform.localEulerAngles = new Vector3(rotationX, rotationY, 0);
+                transform.localEulerAngles = new Vector3(rotationX, rotationY, 0);
+            }
         }
         
     }
+
+    private void Awake()
+    {
+        Messenger.AddListener(GameEvent.GAME_ACTIVE, OnChangeGameState);
+        Messenger.AddListener(GameEvent.GAME_INACTIVE, OnChangeGameState);
+    }
+
+    private void OnDestroy()
+    {
+        Messenger.RemoveListener(GameEvent.GAME_ACTIVE, OnChangeGameState);
+        Messenger.RemoveListener(GameEvent.GAME_INACTIVE, OnChangeGameState);
+    }
+
+    private void OnChangeGameState()
+    {
+        isActive = !isActive;
+    }
+
+
 }

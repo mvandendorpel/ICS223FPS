@@ -5,6 +5,8 @@ public enum EnemyStates { alive, dead };
 public class WanderingAI : MonoBehaviour
 {
     private float enemySpeed = 1.6f;
+    private float baseSpeed = 0.25f;
+    private float difficultySpeedDelta = 0.3f; 
     private float obstacleRange = 5.0f;
     private float sphereRadius = 0.75f;
     private EnemyStates state;
@@ -64,5 +66,11 @@ public class WanderingAI : MonoBehaviour
         Vector3 rangeTest = transform.position + transform.forward * obstacleRange;
         Debug.DrawLine(transform.position, rangeTest);
         Gizmos.DrawWireSphere(rangeTest, sphereRadius);
+    }
+
+    public void SetDifficulty(int newDifficulty)
+    {
+        Debug.Log("WanderingAI.setDifficulty (" + newDifficulty + ")");
+        enemySpeed = baseSpeed + (newDifficulty * difficultySpeedDelta);
     }
 }

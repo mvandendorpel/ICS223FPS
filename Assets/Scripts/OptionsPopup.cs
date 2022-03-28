@@ -2,23 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class OptionsPopup : MonoBehaviour
+public class OptionsPopup : BasePopup
 {
-    [SerializeField] UIController controller;
     [SerializeField] SettingsPopup settingsPopup;
-    public void Open()
+    public override void Open()
     {
-        gameObject.SetActive(true);
+        //gameObject.SetActive(true);
+        base.Open();
     }
 
-    public void Close()
+    public override void Close()
     {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        base.Close();
     }
 
-    public bool isActive()
+    public override bool isActive()
     {
-        return gameObject.activeSelf;
+        //return gameObject.activeSelf;
+        return base.isActive();
     }
 
     public void OnSettingsButton()
@@ -38,7 +40,7 @@ public class OptionsPopup : MonoBehaviour
     {
         Debug.Log("Return to game");
         Close();
-        controller.SetGameActive(true);
+        //controller.SetGameActive(true);
     }
     // Start is called before the first frame update
     void Start()

@@ -944,7 +944,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &172246051
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6558,6 +6558,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 440635250790162341, guid: ad977b37e521f4d4881b614f7f850b4e, type: 3}
   lizardPrefab: {fileID: 141256, guid: b4806bcfd71324778b360c0299195b34, type: 3}
+  ui: {fileID: 473819717}
 --- !u!1 &473819712
 GameObject:
   m_ObjectHideFlags: 0
@@ -9154,6 +9155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 963194227}
+  isActive: 1
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13980,7 +13982,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56fdf573a07a7fe4b97685f930e1dc1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 473819717}
   settingsPopup: {fileID: 1421874005}
 --- !u!1 &2119281291
 GameObject:

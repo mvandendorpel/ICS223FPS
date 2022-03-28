@@ -5,6 +5,7 @@ using UnityEngine;
 public class ReactiveTarget : MonoBehaviour
 {
     // Start is called before the first frame update
+    private bool isAlive = true;
     void Start()
     {
     }
@@ -18,9 +19,11 @@ public class ReactiveTarget : MonoBehaviour
    public void ReactToHit()
     {
         WanderingAI enemyAI = GetComponent<WanderingAI>();
-        if (enemyAI != null)
+        if (enemyAI != null && isAlive)
         {
             enemyAI.ChangeState(EnemyStates.dead);
+            isAlive = false;
+            Messenger.Broadcast(GameEvent.ENEMY_DEAD);
         }
         Animator enemyAnimator = GetComponent<Animator>();
         if (enemyAnimator != null)
@@ -28,6 +31,7 @@ public class ReactiveTarget : MonoBehaviour
             enemyAnimator.SetTrigger("Die");
         }
         //StartCoroutine(Die());
+        
     }
  
     private IEnumerator Die()
