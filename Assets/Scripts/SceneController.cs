@@ -39,19 +39,19 @@ public class SceneController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < maxEnemies; i++)
-        {
-            if (enemies[i] == null)
-            {
-                enemy = Instantiate(enemyPrefab) as GameObject;
-                enemy.transform.position = spawnPoint - new Vector3(0, 0, i * 3);
-                WanderingAI ai = enemy.GetComponent<WanderingAI>();
-                ai.SetDifficulty(getDifficulty());
-                float angle = Random.Range(0, 360);
-                enemy.transform.Rotate(0, angle, 0);
-                enemies[i] = enemy;
-            }
-        }
+        //for (int i = 0; i < maxEnemies; i++)
+        //{
+        //    if (enemies[i] == null)
+        //    {
+        //        enemy = Instantiate(enemyPrefab) as GameObject;
+        //        enemy.transform.position = spawnPoint - new Vector3(0, 0, i * 3);
+        //        WanderingAI ai = enemy.GetComponent<WanderingAI>();
+        //        ai.SetDifficulty(getDifficulty());
+        //        float angle = Random.Range(0, 360);
+        //        enemy.transform.Rotate(0, angle, 0);
+        //        enemies[i] = enemy;
+        //    }
+        //}
     }
 
     void Awake()

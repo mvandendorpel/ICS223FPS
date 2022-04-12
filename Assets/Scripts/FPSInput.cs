@@ -7,6 +7,8 @@ public class FPSInput : MonoBehaviour
     private float speed = 9.0f;
     private float gravity = -9.8f;
     private CharacterController charController;
+    private float pushForce = 5.0f;
+    //Vector3(-11.2,0,8.5) / Vector3(-9.11999989,0,9.84039974)
     // Start is called before the first frame update
     void Start()
     {
@@ -25,5 +27,15 @@ public class FPSInput : MonoBehaviour
         movement = transform.TransformDirection(movement);
         charController.Move(movement);
         
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Rigidbody body = hit.collider.attachedRigidbody;
+
+        if (body != null && !body.isKinematic)
+        {
+            body.velocity = hit.moveDirection * pushForce;
+        }
     }
 }
