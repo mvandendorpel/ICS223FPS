@@ -21,7 +21,19 @@ public class PlayerCharacter : MonoBehaviour
         Debug.Log("Health:" + health);
         if (health == 0)
         {
-            Debug.Break();
+            //Debug.Break();
+            Messenger.Broadcast(GameEvent.PLAYER_DEAD);
         }
+    }
+
+    public void FirstAid(int healthAdded)
+    {
+        health += healthAdded;
+        if (health > MAX_HEALTH)
+        {
+            health = MAX_HEALTH;
+        }
+        float healthPercent = ((float)health) / MAX_HEALTH;
+        Messenger<float>.Broadcast(GameEvent.HEALTH_CHANGED, healthPercent);
     }
 }

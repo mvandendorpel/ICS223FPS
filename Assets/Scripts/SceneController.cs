@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
@@ -39,31 +40,35 @@ public class SceneController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //for (int i = 0; i < maxEnemies; i++)
-        //{
-        //    if (enemies[i] == null)
-        //    {
-        //        enemy = Instantiate(enemyPrefab) as GameObject;
-        //        enemy.transform.position = spawnPoint - new Vector3(0, 0, i * 3);
-        //        WanderingAI ai = enemy.GetComponent<WanderingAI>();
-        //        ai.SetDifficulty(getDifficulty());
-        //        float angle = Random.Range(0, 360);
-        //        enemy.transform.Rotate(0, angle, 0);
-        //        enemies[i] = enemy;
-        //    }
-        //}
+        for (int i = 0; i < maxEnemies; i++)
+        {
+            if (enemies[i] == null)
+            {
+                enemy = Instantiate(enemyPrefab) as GameObject;
+                enemy.transform.position = spawnPoint - new Vector3(0, 0, i * 3);
+                WanderingAI ai = enemy.GetComponent<WanderingAI>();
+                ai.SetDifficulty(getDifficulty());
+                float angle = Random.Range(0, 360);
+                enemy.transform.Rotate(0, angle, 0);
+                enemies[i] = enemy;
+            }
+        }
     }
 
     void Awake()
     {
         Messenger.AddListener(GameEvent.ENEMY_DEAD, this.OnEnemyDead);
         Messenger<int>.AddListener(GameEvent.DIFFICULTY_CHANGED, OnDifficultyChanged);
+        Messenger.AddListener(GameEvent.PLAYER_DEAD, OnPlayerDead);
+        Messenger.AddListener(GameEvent.RESTART_GAME, OnRestartGame);
     }
 
     void OnDestroy()
     {
         Messenger.RemoveListener(GameEvent.ENEMY_DEAD, this.OnEnemyDead);
         Messenger<int>.RemoveListener(GameEvent.DIFFICULTY_CHANGED, OnDifficultyChanged);
+        Messenger.RemoveListener(GameEvent.PLAYER_DEAD, OnPlayerDead);
+        Messenger.RemoveListener(GameEvent.RESTART_GAME, OnPlayerDead);
     }
 
     void OnEnemyDead()
@@ -84,5 +89,15 @@ public class SceneController : MonoBehaviour
     int getDifficulty()
     {
         return PlayerPrefs.GetInt("difficulty", 1);
+    }
+
+    private void OnPlayerDead()
+    {
+        ui.ShowGameOverPopup();
+    }
+
+    public void OnRestartGame()
+    {
+        SceneManager.LoadScene(0);
     }
 }
